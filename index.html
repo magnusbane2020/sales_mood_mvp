@@ -1655,30 +1655,81 @@
       // Client Potential
       const clientScore = analysisData.clientPotential.score;
       const clientTexts = currentLang === 'ro' ? 
-        { high: 'ÎNALT 🔥', med: 'MEDIU 🟡', low: 'SCĂZUT 🔴', analyzing: 'Se analizează...' } :
-        { high: 'HIGH 🔥', med: 'MEDIUM 🟡', low: 'LOW 🔴', analyzing: 'Analyzing...' };
-      const clientText = clientScore >= 0.7 ? clientTexts.high : clientScore >= 0.4 ? clientTexts.med : clientScore > 0 ? clientTexts.low : clientTexts.analyzing;
-      const clientColor = clientScore >= 0.7 ? 'var(--success)' : clientScore >= 0.4 ? 'var(--warning)' : clientScore > 0 ? 'var(--danger)' : 'var(--muted)';
+        { high: 'ÎNALT 🔥', med: 'MEDIU 🟡', low: 'SCĂZUT 🔴', analyzing: 'Se analizează...', none: 'Aștept vorbire...' } :
+        { high: 'HIGH 🔥', med: 'MEDIUM 🟡', low: 'LOW 🔴', analyzing: 'Analyzing...', none: 'Waiting for speech...' };
+      
+      let clientText, clientColor;
+      if (!isAnalyzing) {
+        clientText = clientTexts.none;
+        clientColor = 'var(--muted)';
+      } else if (clientScore >= 0.7) {
+        clientText = clientTexts.high;
+        clientColor = 'var(--success)';
+      } else if (clientScore >= 0.4) {
+        clientText = clientTexts.med;
+        clientColor = 'var(--warning)';
+      } else if (clientScore > 0.1) {
+        clientText = clientTexts.low;
+        clientColor = 'var(--danger)';
+      } else {
+        clientText = clientTexts.analyzing;
+        clientColor = 'var(--muted)';
+      }
+      
       els.clientPotential.textContent = clientText;
       els.clientPotential.style.color = clientColor;
 
       // Financial Power
       const finScore = analysisData.financialPower.score;
       const finTexts = currentLang === 'ro' ? 
-        { high: 'PUTERNICĂ 💰', med: 'MODERATĂ 🟡', low: 'SLABĂ 🔴', analyzing: 'Se analizează...' } :
-        { high: 'STRONG 💰', med: 'MODERATE 🟡', low: 'WEAK 🔴', analyzing: 'Analyzing...' };
-      const finText = finScore >= 0.7 ? finTexts.high : finScore >= 0.4 ? finTexts.med : finScore > 0 ? finTexts.low : finTexts.analyzing;
-      const finColor = finScore >= 0.7 ? 'var(--success)' : finScore >= 0.4 ? 'var(--warning)' : finScore > 0 ? 'var(--danger)' : 'var(--muted)';
+        { high: 'PUTERNICĂ 💰', med: 'MODERATĂ 🟡', low: 'SLABĂ 🔴', analyzing: 'Se analizează...', none: 'Aștept vorbire...' } :
+        { high: 'STRONG 💰', med: 'MODERATE 🟡', low: 'WEAK 🔴', analyzing: 'Analyzing...', none: 'Waiting for speech...' };
+      
+      let finText, finColor;
+      if (!isAnalyzing) {
+        finText = finTexts.none;
+        finColor = 'var(--muted)';
+      } else if (finScore >= 0.7) {
+        finText = finTexts.high;
+        finColor = 'var(--success)';
+      } else if (finScore >= 0.4) {
+        finText = finTexts.med;
+        finColor = 'var(--warning)';
+      } else if (finScore > 0.1) {
+        finText = finTexts.low;
+        finColor = 'var(--danger)';
+      } else {
+        finText = finTexts.analyzing;
+        finColor = 'var(--muted)';
+      }
+      
       els.financialPower.textContent = finText;
       els.financialPower.style.color = finColor;
 
       // Premium Openness
       const premScore = analysisData.premiumOpenness.score;
       const premTexts = currentLang === 'ro' ? 
-        { high: 'FOARTE DESCHIS ✨', med: 'DESCHIS 🟡', low: 'RETICENT 🔴', analyzing: 'Se analizează...' } :
-        { high: 'VERY OPEN ✨', med: 'OPEN 🟡', low: 'RELUCTANT 🔴', analyzing: 'Analyzing...' };
-      const premText = premScore >= 0.7 ? premTexts.high : premScore >= 0.4 ? premTexts.med : premScore > 0 ? premTexts.low : premTexts.analyzing;
-      const premColor = premScore >= 0.7 ? 'var(--success)' : premScore >= 0.4 ? 'var(--warning)' : premScore > 0 ? 'var(--danger)' : 'var(--muted)';
+        { high: 'FOARTE DESCHIS ✨', med: 'DESCHIS 🟡', low: 'RETICENT 🔴', analyzing: 'Se analizează...', none: 'Aștept vorbire...' } :
+        { high: 'VERY OPEN ✨', med: 'OPEN 🟡', low: 'RELUCTANT 🔴', analyzing: 'Analyzing...', none: 'Waiting for speech...' };
+      
+      let premText, premColor;
+      if (!isAnalyzing) {
+        premText = premTexts.none;
+        premColor = 'var(--muted)';
+      } else if (premScore >= 0.7) {
+        premText = premTexts.high;
+        premColor = 'var(--success)';
+      } else if (premScore >= 0.4) {
+        premText = premTexts.med;
+        premColor = 'var(--warning)';
+      } else if (premScore > 0.1) {
+        premText = premTexts.low;
+        premColor = 'var(--danger)';
+      } else {
+        premText = premTexts.analyzing;
+        premColor = 'var(--muted)';
+      }
+      
       els.premiumOpenness.textContent = premText;
       els.premiumOpenness.style.color = premColor;
     }
@@ -3941,6 +3992,9 @@
         // Update gesture recognition display
         updateGestureDisplay(gestures);
         
+        // Update real-time analysis display
+        updateAnalysisDisplay();
+        
         // Add analysis data to current session
         if (analyticsData.currentSession) {
           analyticsData.currentSession.conversationData.emotionalStates.push({
@@ -5779,7 +5833,7 @@
       
       // Update predictive analytics every 5 seconds
       setInterval(() => {
-        if (predictiveAnalytics && isAnalyzing) {
+        if (predictiveAnalytics && isAnalyzing && running) {
           const closingProb = predictiveAnalytics.calculateClosingProbability();
           const dealRisk = predictiveAnalytics.assessDealRisk();
           const actions = predictiveAnalytics.generateNextBestActions();
