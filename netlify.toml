@@ -1,0 +1,33 @@
+[build]
+  publish = "."
+  
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Powered-By = "Sales Mood AI"
+    
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    
+# Redirect demo.html to root for clean URLs
+[[redirects]]
+  from = "/demo"
+  to = "/demo.html"
+  status = 200
+  
+# Ensure main app is accessible
+[[redirects]]
+  from = "/app"
+  to = "/index.html"
+  status = 200
