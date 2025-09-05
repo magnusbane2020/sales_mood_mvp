@@ -5247,6 +5247,10 @@
       try {
         await initMedia();
         await initModels();
+        // Initialize V2 Advanced AI Systems after consent
+        setTimeout(() => {
+          initializeV2Systems();
+        }, 2000);
       } catch (err) {
         showError('Eroare inițializare: ' + err.message);
         console.error(err);
@@ -5948,12 +5952,6 @@
     // Initialize
     setStatus('uninitialized');
     
-    // Initialize V2 Advanced AI Systems after consent
-    document.getElementById('agreeBtn').addEventListener('click', () => {
-      setTimeout(() => {
-        initializeV2Systems();
-      }, 2000); // Initialize after UI setup
-    });
   </script>
 </body>
 </html>
