@@ -291,19 +291,19 @@
         <h4 style="margin:0 0 8px;font-size:14px;color:#06b6d4">🚀 V2 Advanced AI Features</h4>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:10px">
           <div class="row" style="justify-content:space-between">
-            <span class="muted" data-translate="speechAnalysis">🎤 Analiză Vocală:</span>
+            <span class="muted">🎤 Speech Analysis:</span>
             <span id="v2SpeechStatus" style="font-weight:bold;color:var(--warning)">Standby</span>
           </div>
           <div class="row" style="justify-content:space-between">
-            <span class="muted" data-translate="sentimentAI">🧠 AI Sentiment:</span>
+            <span class="muted">🧠 Sentiment AI:</span>
             <span id="v2SentimentStatus" style="font-weight:bold;color:var(--success)">Active</span>
           </div>
           <div class="row" style="justify-content:space-between">
-            <span class="muted" data-translate="predictive">📊 Predictiv:</span>
+            <span class="muted">📊 Predictive:</span>
             <span id="v2PredictiveStatus" style="font-weight:bold;color:var(--success)">Learning</span>
           </div>
           <div class="row" style="justify-content:space-between">
-            <span class="muted" data-translate="timingAI">⏰ Timing AI:</span>
+            <span class="muted">⏰ Timing AI:</span>
             <span id="v2TimingStatus" style="font-weight:bold;color:var(--success)">Monitoring</span>
           </div>
         </div>
@@ -555,32 +555,6 @@
           stopped: "Oprit",
           error: "Eroare"
         }
-        ui: {
-          startAnalysis: "Pornește analiză",
-          stopAnalysis: "Oprește",
-          pauseAnalysis: "Pauză",
-          activateSpeech: "🎤 Activează recunoaștere vocală",
-          deactivateSpeech: "🎤 Oprește recunoaștere",
-          testAnalysis: "🧪 Test Analiză",
-          generateScript: "📝 Script",
-          openDashboard: "📊 Dashboard",
-          speechAnalysis: "Analiză Vocală:",
-          sentimentAI: "AI Sentiment:",
-          predictive: "Predictiv:",
-          timingAI: "Timing AI:",
-          standby: "Standby",
-          active: "Activ",
-          learning: "Învățare",
-          monitoring: "Monitorizare"
-        },
-        insights: {
-          conversionRateLow: "Rata de conversie {rate}% este sub media industriei. Consideră îmbunătățirea procesului de calificare",
-          conversionRateHigh: "Excelent! Rata ta de conversie {rate}% este cu {percent}% peste media industriei",
-          strongDealSizes: "Valori puternice ale tranzacțiilor! Media ${amount} arată poziționarea eficientă a valorii",
-          fastSalesCycle: "Ciclu de vânzări rapid! Media de {days} zile arată închiderea eficientă",
-          excellentProductivity: "Productivitate excelentă! ${amount}/oră arată eficiență ridicată",
-          premiumBuyersDetected: "Cumpărători premium detectați! Concentrează-te pe propuneri de valoare ridicată și exclusivitate"
-        }
       },
       en: {
         tips: {
@@ -596,32 +570,6 @@
           paused: "Paused",
           stopped: "Stopped", 
           error: "Error"
-        }
-        ui: {
-          startAnalysis: "Start Analysis",
-          stopAnalysis: "Stop",
-          pauseAnalysis: "Pause",
-          activateSpeech: "🎤 Activate Speech Recognition",
-          deactivateSpeech: "🎤 Stop Recognition",
-          testAnalysis: "🧪 Test Analysis",
-          generateScript: "📝 Script",
-          openDashboard: "📊 Dashboard",
-          speechAnalysis: "Speech Analysis:",
-          sentimentAI: "Sentiment AI:",
-          predictive: "Predictive:",
-          timingAI: "Timing AI:",
-          standby: "Standby",
-          active: "Active",
-          learning: "Learning",
-          monitoring: "Monitoring"
-        },
-        insights: {
-          conversionRateLow: "Conversion rate {rate}% is below industry average. Consider improving qualification process",
-          conversionRateHigh: "Excellent! Your {rate}% conversion rate is {percent}% above industry average",
-          strongDealSizes: "Strong deal sizes! Average ${amount} shows effective value positioning",
-          fastSalesCycle: "Fast sales cycle! Average {days} days shows efficient closing",
-          excellentProductivity: "Excellent productivity! ${amount}/hour shows high efficiency",
-          premiumBuyersDetected: "Premium buyers detected! Focus on high-value propositions and exclusivity"
         }
       }
     };
@@ -1706,40 +1654,13 @@
             };
             analyticsData.currentSession.addScoreUpdate(categoryMap[category], newScore);
           }
-      els.startBtn.textContent = translations[currentLang].ui.startAnalysis;
-      els.stopBtn.textContent = translations[currentLang].ui.stopAnalysis;
-      els.pauseBtn.textContent = translations[currentLang].ui.pauseAnalysis;
-      els.toggleSpeech.textContent = translations[currentLang].ui.activateSpeech;
-      els.testAnalysis.textContent = translations[currentLang].ui.testAnalysis;
-      els.generateScript.textContent = translations[currentLang].ui.generateScript;
-      els.toggleAnalytics.textContent = translations[currentLang].ui.openDashboard;
-      
-      // Update V2 Advanced AI Features section
-      const v2SpeechStatus = document.getElementById('v2SpeechStatus');
-      const v2SentimentStatus = document.getElementById('v2SentimentStatus');
-      const v2PredictiveStatus = document.getElementById('v2PredictiveStatus');
-      const v2TimingStatus = document.getElementById('v2TimingStatus');
-      
-      if (v2SpeechStatus && v2SpeechStatus.textContent === 'Standby') {
-        v2SpeechStatus.textContent = translations[currentLang].ui.standby;
-      }
-      if (v2SentimentStatus && v2SentimentStatus.textContent === 'Active') {
-        v2SentimentStatus.textContent = translations[currentLang].ui.active;
-      }
-      if (v2PredictiveStatus && v2PredictiveStatus.textContent === 'Learning') {
-        v2PredictiveStatus.textContent = translations[currentLang].ui.learning;
-      }
-      if (v2TimingStatus && v2TimingStatus.textContent === 'Monitoring') {
-        v2TimingStatus.textContent = translations[currentLang].ui.monitoring;
-      }
-      
-      // Update labels with data-translate attributes
-      document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (translations[currentLang].ui[key]) {
-          element.textContent = element.textContent.replace(/[^🎤🧠📊⏰]+/, ' ' + translations[currentLang].ui[key].replace(/[🎤🧠📊⏰]/g, '').trim() + ':');
         }
       });
+      
+      // Add transcript to current session
+      if (analyticsData.currentSession) {
+        analyticsData.currentSession.addTranscript(text, analysisResults);
+      }
       
       // Detect and handle objections
       detectObjections(text);
@@ -1751,11 +1672,6 @@
       autoGenerateScripts();
       
       updateAnalysisDisplay();
-      
-      // Update dashboard if open
-      if (els.analyticsModal.style.display === 'flex') {
-        updateDashboardDisplay();
-      }
       generateLiveRecommendations();
     }
 
@@ -4413,15 +4329,13 @@
       if (conversionRate > benchmarkRate * 1.2) {
         insights.push({
           type: 'success',
-          message: translations[currentLang].insights.conversionRateHigh
-            .replace('{rate}', (conversionRate * 100).toFixed(1))
-            .replace('{percent}', ((conversionRate / benchmarkRate - 1) * 100).toFixed(0)),
+          message: `🎉 Excellent! Your ${(conversionRate * 100).toFixed(1)}% conversion rate is ${((conversionRate / benchmarkRate - 1) * 100).toFixed(0)}% above industry average`,
           priority: 'high'
         });
       } else if (conversionRate < benchmarkRate * 0.8) {
         insights.push({
           type: 'warning',
-          message: `⚠️ ${translations[currentLang].insights.conversionRateLow.replace('{rate}', (conversionRate * 100).toFixed(1))}`,
+          message: `⚠️ Conversion rate ${(conversionRate * 100).toFixed(1)}% is below industry average. Consider improving qualification process`,
           priority: 'high'
         });
       }
@@ -4430,7 +4344,7 @@
       if (metrics.avgDealSize > metrics.performanceAnalytics.benchmarks.minDealSize * 2) {
         insights.push({
           type: 'success',
-          message: `💰 ${translations[currentLang].insights.strongDealSizes.replace('{amount}', metrics.avgDealSize.toFixed(0))}`,
+          message: `💰 Strong deal sizes! Average $${metrics.avgDealSize.toFixed(0)} shows effective value positioning`,
           priority: 'medium'
         });
       }
@@ -4439,7 +4353,7 @@
       if (metrics.dealMetrics.avgDealCycle > 0 && metrics.dealMetrics.avgDealCycle < metrics.performanceAnalytics.benchmarks.maxDealCycle) {
         insights.push({
           type: 'success',
-          message: `⚡ ${translations[currentLang].insights.fastSalesCycle.replace('{days}', metrics.dealMetrics.avgDealCycle)}`,
+          message: `⚡ Fast sales cycle! Average ${metrics.dealMetrics.avgDealCycle} days shows efficient closing`,
           priority: 'medium'
         });
       }
@@ -4448,7 +4362,7 @@
       if (metrics.performanceAnalytics.roiMetrics.revenuePerHour > 500) {
         insights.push({
           type: 'success',
-          message: `🚀 ${translations[currentLang].insights.excellentProductivity.replace('{amount}', metrics.performanceAnalytics.roiMetrics.revenuePerHour.toFixed(0))}`,
+          message: `🚀 Excellent productivity! $${metrics.performanceAnalytics.roiMetrics.revenuePerHour.toFixed(0)}/hour shows high efficiency`,
           priority: 'medium'
         });
       }
@@ -4457,7 +4371,7 @@
       if (metrics.performanceAnalytics.successPatterns.includes('premium_buyer')) {
         insights.push({
           type: 'insight',
-          message: `✨ ${translations[currentLang].insights.premiumBuyersDetected}`,
+          message: `✨ Premium buyers detected! Focus on high-value propositions and exclusivity`,
           priority: 'medium'
         });
       }
@@ -5193,6 +5107,9 @@
       currentLang = currentLang === 'ro' ? 'en' : 'ro';
       els.langToggle.textContent = currentLang === 'ro' ? '🌐 EN' : '🌐 RO';
       
+      // Update all UI elements with new language
+      updateUILanguage();
+      
       if (recognition && isListening) {
         recognition.stop();
         setTimeout(() => {
@@ -5200,6 +5117,24 @@
           recognition.start();
         }, 100);
       }
+    }
+    
+    function updateUILanguage() {
+      // Update button texts
+      els.startBtn.textContent = translations[currentLang].ui.startAnalysis;
+      els.stopBtn.textContent = translations[currentLang].ui.stopAnalysis;
+      els.pauseBtn.textContent = paused ? translations[currentLang].ui.resumeAnalysis : translations[currentLang].ui.pauseAnalysis;
+      els.toggleSpeech.textContent = isListening ? translations[currentLang].ui.deactivateSpeech : translations[currentLang].ui.activateSpeech;
+      els.testAnalysis.textContent = translations[currentLang].ui.testAnalysis;
+      els.generateScript.textContent = translations[currentLang].ui.generateScript;
+      els.toggleAnalytics.textContent = translations[currentLang].ui.openDashboard;
+      
+      // Update status
+      const currentStatus = els.status.textContent;
+      setStatus(running ? 'running' : paused ? 'paused' : 'ready');
+      
+      // Update analysis display
+      updateAnalysisDisplay();
     }
 
     // Test function to manually trigger analysis with varied scenarios
@@ -5247,10 +5182,6 @@
       try {
         await initMedia();
         await initModels();
-        // Initialize V2 Advanced AI Systems after consent
-        setTimeout(() => {
-          initializeV2Systems();
-        }, 2000);
       } catch (err) {
         showError('Eroare inițializare: ' + err.message);
         console.error(err);
@@ -5952,6 +5883,12 @@
     // Initialize
     setStatus('uninitialized');
     
+    // Initialize V2 Advanced AI Systems after consent
+    document.getElementById('agreeBtn').addEventListener('click', () => {
+      setTimeout(() => {
+        initializeV2Systems();
+      }, 2000); // Initialize after UI setup
+    });
   </script>
 </body>
 </html>
