@@ -503,15 +503,39 @@
     }
     
     // Import jsPDF for PDF generation
-    let jsPDF;
-    try {
-      const jsPDFModule = await import('https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js');
-      jsPDF = jsPDFModule.jsPDF;
-      console.log('jsPDF loaded successfully');
-    } catch (error) {
-      console.error('Failed to load jsPDF:', error);
-      // Fallback: try to use global jsPDF if available
-      jsPDF = window.jsPDF;
+    // Load jsPDF library
+    let jsPDF = null;
+    
+    // Function to load jsPDF dynamically
+    async function loadJsPDF() {
+      if (jsPDF) return jsPDF;
+      
+      try {
+        // Create script element to load jsPDF
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        
+        // Wait for script to load
+        await new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+        
+        // Get jsPDF from global window object
+        jsPDF = window.jspdf?.jsPDF || window.jsPDF;
+        
+        if (!jsPDF) {
+          throw new Error('jsPDF not found on window object');
+        }
+        
+        console.log('jsPDF loaded successfully');
+        return jsPDF;
+        
+      } catch (error) {
+        console.error('Failed to load jsPDF:', error);
+        throw new Error('PDF generation library could not be loaded');
+      }
     }
 
     // Translation system
@@ -4725,12 +4749,8 @@
 
     // PDF Export Functions
     function exportFullPerformanceReport() {
-      if (!jsPDF) {
-        alert('PDF generation library not loaded. Please try again.');
-        return;
-      }
-      
-      try {
+      loadJsPDF().then(pdf => {
+        jsPDF = pdf;
         const doc = new jsPDF();
         const summary = getAnalyticsSummary();
         const currentDate = new Date().toLocaleDateString('ro-RO');
@@ -4871,24 +4891,20 @@
         doc.save(`Sales_Performance_Report_${currentDate.replace(/\//g, '-')}.pdf`);
         console.log('Full performance report exported successfully');
         
-      } catch (error) {
+      }).catch(error => {
         console.error('Error generating PDF:', error);
-        alert('Eroare la generarea raportului PDF. Verificati consola pentru detalii.');
-      }
+        alert('Eroare la încărcarea bibliotecii PDF. Încercați din nou.');
+      });
     }
     
     function exportClientProfilesReport() {
-      if (!jsPDF) {
-        alert('PDF generation library not loaded. Please try again.');
-        return;
-      }
-      
       if (analyticsData.clientProfiles.size === 0) {
         alert('Nu exista profiluri de clienti pentru export.');
         return;
       }
       
-      try {
+      loadJsPDF().then(pdf => {
+        jsPDF = pdf;
         const doc = new jsPDF();
         const currentDate = new Date().toLocaleDateString('ro-RO');
         
@@ -4967,25 +4983,21 @@
         doc.save(`Client_Profiles_Report_${currentDate.replace(/\//g, '-')}.pdf`);
         console.log('Client profiles report exported successfully');
         
-      } catch (error) {
+      }).catch(error => {
         console.error('Error generating client PDF:', error);
-        alert('Eroare la generarea raportului PDF. Verificati consola pentru detalii.');
-      }
+        alert('Eroare la încărcarea bibliotecii PDF. Încercați din nou.');
+      });
     }
     
     function exportCurrentSessionReport() {
-      if (!jsPDF) {
-        alert('PDF generation library not loaded. Please try again.');
-        return;
-      }
-      
       const lastSession = analyticsData.sessions[analyticsData.sessions.length - 1];
       if (!lastSession) {
         alert('Nu exista sesiuni pentru export.');
         return;
       }
       
-      try {
+      loadJsPDF().then(pdf => {
+        jsPDF = pdf;
         const doc = new jsPDF();
         const summary = lastSession.generateSummary();
         const currentDate = new Date().toLocaleDateString('ro-RO');
@@ -5065,10 +5077,10 @@
         doc.save(`Session_Report_${lastSession.startTime.toISOString().slice(0, 10)}.pdf`);
         console.log('Session report exported successfully');
         
-      } catch (error) {
+      }).catch(error => {
         console.error('Error generating session PDF:', error);
-        alert('Eroare la generarea raportului PDF. Verificati consola pentru detalii.');
-      }
+        alert('Eroare la încărcarea bibliotecii PDF. Încercați din nou.');
+      });
     }
 
     function toggleSpeech() {
